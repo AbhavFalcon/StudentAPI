@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: abhaveda
+      POSTGRES_DB: studentDB
+    ports:
+      - "5433:5432"
+    networks:
+      - my-network
+
+  spring-app:
+    build: .
+    container_name: spring-app
+    depends_on:
+      - postgres-db
+    ports:
+      - "8082:8082"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
